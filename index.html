@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Gallery Scroll</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a40, #2d2d7a, #1a1a40);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .gallery-container {
+      position: relative;
+      width: 90%;
+      max-width: 1000px;
+      overflow: hidden;
+      padding: 20px;
+      border-radius: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      margin-bottom: 30px;
+    }
+
+    .gallery {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+    }
+
+    .gallery::-webkit-scrollbar {
+      display: none;
+    }
+
+    .card {
+      text-align: center;
+      margin-right: 20px;
+      perspective: 1000px;
+    }
+
+    .card img {
+      height: 300px;
+      width: 200px;
+      border-radius: 15px;
+      object-fit: cover;
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+    }
+
+    .card:hover img {
+      transform: rotateY(10deg) scale(1.05);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .tag {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #fff;
+      font-size: 1rem;
+      text-shadow: 0 0 5px #000;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 28px;
+      background: #ff3d3d;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .arrow.left {
+      left: 10px;
+    }
+
+    .arrow.right {
+      right: 10px;
+    }
+
+    /* 🎵 Music Button Style with Animation */
+    .music-btn {
+      background: #00c853;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00c853;
+      animation: pulse 2s infinite;
+      transition: background 0.4s ease, transform 0.3s ease;
+    }
+
+    .music-btn:hover {
+      background: #00a944;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ff88;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 10px #00c853;
+      }
+      50% {
+        box-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88;
+      }
+      100% {
+        box-shadow: 0 0 10px #00c853;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎵 Background Music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="Bro.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- 🎛 Animated Play/Pause Button -->
+  <button class="music-btn" onclick="toggleMusic()" id="musicToggle">Pause Music 🎵</button>
+
+  <div class="gallery-container">
+    <button class="arrow left" onclick="scrollGallery(-1)">&#8249;</button>
+    <div class="gallery" id="gallery">
+      <div class="card">
+        <img src="Bro1.jpg" alt="Image 1">
+        <div class="tag">Annaya😘</div>
+      </div>
+      <div class="card">
+        <img src="Bro2.jpg" alt="Image 2">
+        <div class="tag">Jerry🐱🐭</div>
+      </div>
+      <div class="card">
+        <img src="Bro3.jpg" alt="Image 3">
+        <div class="tag">Bangaram💖</div>
+      </div>
+      <div class="card">
+        <img src="Bro4.jpg" alt="Image 4">
+        <div class="tag">Second Dad❤‍🩹</div>
+      </div>
+      <div class="card">
+        <img src="Bro5.jpg" alt="Image 5">
+        <div class="tag">Piggu🐷</div>
+      </div>
+    </div>
+    <button class="arrow right" onclick="scrollGallery(1)">&#8250;</button>
+  </div>
+
+  <script>
+    const gallery = document.getElementById('gallery');
+    const music = document.getElementById('bgMusic');
+    const musicToggleBtn = document.getElementById('musicToggle');
+
+    function scrollGallery(direction) {
+      const scrollAmount = 240;
+      gallery.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+
+    // Auto scroll every 3 seconds
+    setInterval(() => {
+      scrollGallery(1);
+    }, 3000);
+
+    // Toggle music play/pause
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicToggleBtn.innerText = "Pause Music 🎵";
+      } else {
+        music.pause();
+        musicToggleBtn.innerText = "Play Music 🎶";
+      }
+    }
+  </script>
+
+</body>
+</html>
